@@ -44,7 +44,7 @@ def perlin_classical(gradients, offset_cell, cell_weights):
     -------
     noise : np.ndarray of shape (n_x * cw, n_y * cw)
         The reconstructed Perlin noise over the entire grid.
-        A vertical flip is applied at the end to match the original orientation.
+        
     """
 
     n_x = gradients.shape[0] - 1
