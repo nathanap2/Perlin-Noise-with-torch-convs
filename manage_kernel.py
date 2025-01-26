@@ -1,16 +1,14 @@
 import os
 import numpy as np
 import torch
+from smoothstep_functions import fade
 
-
-
-def fade(t: float) -> float:
-    if t < 0.0:
-        return 0.0
-    elif t > 1.0:
-        return 0.0
-    return 3.0 * t**2 - 2.0 * t**3
-
+"""
+core code for the torch conv method
+It's fondamentally the same as the "Kronecker-like" method in numpy
+but it uses convTranspose2D, which is simple and improves readability
++ might open some learning possibilities
+"""
 
 
 def build_centered_smoothstep_kernel(cell_size, smoothstep_fn = fade):
@@ -60,7 +58,7 @@ def build_perlin_kernel(cell_size: int) -> torch.Tensor:
     return kernel[None,...]
     
     
-def build_perlin_transpose_conv(cell_size: int) -> nn.ConvTranspose2d:
+def build_perlin_transpose_conv(cell_size: int) -> torch.nn.ConvTranspose2d:
     kernel_size = (2*cell_size+1)
     convT = torch.nn.ConvTranspose2d(
         in_channels=2,
